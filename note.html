@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grace💩 Note</title>
+    <style>
+      :root {
+        --bg-color: #f4f4f4;
+        --text-color: #000;
+        --card-bg: #fff;
+        --border-color: #ccc;
+      }
+
+      body.dark-mode {
+        --bg-color: #1e1e1e;
+        --text-color: #eee;
+        --card-bg: #2a2a2a;
+        --border-color: #444;
+      }
+
+      body {
+        font-family: sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        padding: 20px;
+        line-height: 1.6;
+      }
+      h1 {
+        text-align: center;
+      }
+      details {
+        margin-bottom: 10px;
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 10px;
+      }
+      summary {
+        font-weight: bold;
+        cursor: pointer;
+      }
+      code {
+        display: block;
+        background-color: #eee;
+        padding: 8px;
+        margin-top: 5px;
+        white-space: pre-wrap;
+        color: #333;
+      }
+      .toggle-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      #search {
+        padding: 8px;
+        width: 100%;
+        max-width: 300px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+      button {
+        padding: 8px 12px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 6px;
+        background-color: #555;
+        color: #fff;
+        cursor: pointer;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 4px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: #2196f3;
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Grace💩</h1>
+
+    <div class="toggle-container">
+      <input
+        type="text"
+        id="search"
+        placeholder="Search a tag..."
+        oninput="filterTags()"
+      />
+      <label class="switch">
+        <input type="checkbox" id="modeToggle" onclick="toggleMode()" />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div id="notes">
+      <details>
+        <summary>Heading</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>&lt;h1&gt;Title&lt;/h1&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code>&lt;h1&gt;Welcome to HTML&lt;/h1&gt;</code>
+      </details>
+
+      <details>
+        <summary>Paragraph</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>&lt;p&gt;Text here&lt;/p&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code>&lt;p&gt;This is a paragraph.&lt;/p&gt;</code>
+      </details>
+
+      <details>
+        <summary>Span</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>&lt;span&gt;text&lt;/span&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code
+          >&lt;p&gt;This is &lt;span&gt;important&lt;/span&gt;&lt;/p&gt;</code
+        >
+      </details>
+
+      <details>
+        <summary>Image</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>&lt;img src="image.jpg" alt="desc" /&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code>&lt;img src="cat.jpg" alt="A Cat" /&gt;</code>
+      </details>
+
+      <details>
+        <summary>Anchor</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>&lt;a href="url"&gt;Link&lt;/a&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code>&lt;a href="https://google.com"&gt;Google&lt;/a&gt;</code>
+      </details>
+
+      <details>
+        <summary>List</summary>
+        <p><strong>Ordered:</strong></p>
+        <code>&lt;ol&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;/ol&gt;</code>
+        <p><strong>Unordered:</strong></p>
+        <code>&lt;ul&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;/ul&gt;</code>
+      </details>
+
+      <details>
+        <summary>Bold & Italic</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>&lt;b&gt;text&lt;/b&gt;, &lt;strong&gt;text&lt;/strong&gt;</code>
+        <code>&lt;i&gt;text&lt;/i&gt;, &lt;em&gt;text&lt;/em&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code
+          >This is &lt;b&gt;bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt;</code
+        >
+      </details>
+
+      <details>
+        <summary>Mark</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>&lt;mark&gt;highlight&lt;/mark&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code>This is &lt;mark&gt;important&lt;/mark&gt;</code>
+      </details>
+
+      <details>
+        <summary>Delete</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>&lt;del&gt;removed&lt;/del&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code>&lt;del&gt;Old Price&lt;/del&gt;</code>
+      </details>
+
+      <details>
+        <summary>Sub & Sup</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>H&lt;sub&gt;2&lt;/sub&gt;O, x&lt;sup&gt;2&lt;/sup&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code>H<sub>2</sub>O, x<sup>2</sup></code>
+      </details>
+
+      <details>
+        <summary>Select</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>
+          &lt;select&gt; &lt;option&gt;One&lt;/option&gt; &lt;/select&gt;
+        </code>
+        <p><strong>Example:</strong></p>
+        <code>
+          &lt;label&gt;Choose:&lt;/label&gt;
+          &lt;select&gt;&lt;option&gt;Red&lt;/option&gt;&lt;/select&gt;
+        </code>
+      </details>
+
+      <details>
+        <summary>Iframe</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>&lt;iframe src="url"&gt;&lt;/iframe&gt;</code>
+        <p><strong>Example:</strong></p>
+        <code
+          >&lt;iframe src="https://example.com" width="300"
+          height="200"&gt;&lt;/iframe&gt;</code
+        >
+      </details>
+
+      <details>
+        <summary>Video</summary>
+        <p><strong>Syntax:</strong></p>
+        <code>
+          &lt;video controls&gt; &lt;source src="video.mp4" type="video/mp4"
+          /&gt; &lt;/video&gt;
+        </code>
+        <p><strong>Example:</strong></p>
+        <code>
+          &lt;video controls width="320" height="240"&gt; &lt;source
+          src="movie.mp4" type="video/mp4" /&gt; &lt;/video&gt;
+        </code>
+      </details>
+    </div>
+
+    <script>
+      function toggleMode() {
+        document.body.classList.toggle("dark-mode");
+      }
+
+      function filterTags() {
+        const input = document.getElementById("search").value.toLowerCase();
+        const tags = document.querySelectorAll("details");
+        tags.forEach((tag) => {
+          const summary = tag
+            .querySelector("summary")
+            .textContent.toLowerCase();
+          if (summary.includes(input)) {
+            tag.style.display = "";
+          } else {
+            tag.style.display = "none";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
